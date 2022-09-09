@@ -37,6 +37,22 @@ const App = () => {
     setBad(bad + 1);
   };
 
+  const feedback = { good: good, neutral: neutral, bad: bad };
+
+  if (!(good || neutral || bad)) {
+    return (
+      <div>
+        <h1>give feedback</h1>
+        <button onClick={handleGood}>good</button>
+        <button onClick={handleNeutral}>neutral</button>
+        <button onClick={handleBad}>bad</button>
+
+        <h2>statistics</h2>
+        <p>No feedback given</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -45,11 +61,12 @@ const App = () => {
       <button onClick={handleBad}>bad</button>
 
       <h2>statistics</h2>
+
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
 
-      <Statistics good={good} neutral={neutral} bad={bad} />
+      <Statistics {...feedback} />
     </div>
   );
 };
