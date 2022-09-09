@@ -1,6 +1,25 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 
+const Button = ({ handleClick, children }) => {
+  return (
+    <>
+      <button onClick={handleClick}>{children}</button>
+    </>
+  );
+};
+
+const Statistic = ({ children, value }) => {
+  return (
+    <tr>
+      <td>{children}</td>
+      <td>
+        {value} {children == "positive" ? "%" : ""}
+      </td>
+    </tr>
+  );
+};
+
 const Statistics = ({ good, neutral, bad }) => {
   const allFeedbacks = () => good + neutral + bad;
   const avgFeedback = () => {
@@ -13,11 +32,11 @@ const Statistics = ({ good, neutral, bad }) => {
   };
 
   return (
-    <div className="statistics">
-      <p>all {allFeedbacks()}</p>
-      <p>average {avgFeedback()}</p>
-      <p>positive {positiveFeedbackRate()} %</p>
-    </div>
+    <>
+      <Statistic value={allFeedbacks()}>all</Statistic>
+      <Statistic value={avgFeedback()}>average</Statistic>
+      <Statistic value={positiveFeedbackRate()}>positive</Statistic>
+    </>
   );
 };
 
@@ -43,9 +62,9 @@ const App = () => {
     return (
       <div>
         <h1>give feedback</h1>
-        <button onClick={handleGood}>good</button>
-        <button onClick={handleNeutral}>neutral</button>
-        <button onClick={handleBad}>bad</button>
+        <Button handleClick={handleGood}>good</Button>
+        <Button handleClick={handleNeutral}>neutral</Button>
+        <Button handleClick={handleBad}>bad</Button>
 
         <h2>statistics</h2>
         <p>No feedback given</p>
@@ -62,11 +81,21 @@ const App = () => {
 
       <h2>statistics</h2>
 
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-
-      <Statistics {...feedback} />
+      <table>
+        <tr>
+          <td>good</td>
+          <td>{good}</td>
+        </tr>
+        <tr>
+          <td>neutral</td>
+          <td>{neutral}</td>
+        </tr>
+        <tr>
+          <td>bad</td>
+          <td>{bad}</td>
+        </tr>
+        <Statistics {...feedback} />
+      </table>
     </div>
   );
 };
