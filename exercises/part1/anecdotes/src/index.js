@@ -30,12 +30,31 @@ const App = (props) => {
     return incrementVote;
   };
 
+  /**
+   *
+   * @returns {number} index of most voted anecdote
+   */
+  const mostVotedAnecdote = () => {
+    const votes = Object.values(points);
+    const maxVote = Math.max(...votes);
+    return votes.indexOf(maxVote);
+  };
+
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       <div>{props.anecdotes[selected]}</div>
-      <p>has {points[selected]} votes</p>
+      <p>
+        <small>has {points[selected]} votes</small>
+      </p>
       <button onClick={handleVoteIncrement(selected)}>vote</button>
       <button onClick={getRandomAnecdote}>next anecdote</button>
+
+      <h2>Anecdote with most votes</h2>
+      <p>{props.anecdotes[mostVotedAnecdote()]}</p>
+      <p>
+        <small>has {points[mostVotedAnecdote()]} votes</small>
+      </p>
     </div>
   );
 };
