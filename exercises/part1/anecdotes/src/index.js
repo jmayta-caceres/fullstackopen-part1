@@ -3,6 +3,14 @@ import ReactDOM from "react-dom/client";
 
 const App = (props) => {
   const [selected, setSelected] = useState(0);
+  const [points, setPoints] = useState({
+    0: 0,
+    1: 0,
+    2: 0,
+    3: 0,
+    4: 0,
+    5: 0,
+  });
 
   const getRandomNumber = (max) => {
     return Math.round(Math.random() * max);
@@ -12,10 +20,22 @@ const App = (props) => {
     setSelected(getRandomNumber(anecdotes.length));
   };
 
+  const handleVoteIncrement = (selected) => {
+    let newPoints = { ...points };
+    newPoints[selected] += 1;
+
+    const incrementVote = () => {
+      setPoints(newPoints);
+    };
+    return incrementVote;
+  };
+
   return (
     <div>
       <div>{props.anecdotes[selected]}</div>
-      <button onClick={getRandomAnecdote}>Aleatory Anecdote</button>
+      <p>has {points[selected]} votes</p>
+      <button onClick={handleVoteIncrement(selected)}>vote</button>
+      <button onClick={getRandomAnecdote}>next anecdote</button>
     </div>
   );
 };
