@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Persons from "./components/Persons";
+
 const App = () => {
   const fakePersons = [
     { id: 1, name: "Arto Hellas", number: "934-6598-123" },
@@ -56,30 +60,19 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with
-        <input value={query} onChange={handleSearch} type="text" />
-      </div>
-      <h2>add a new</h2>
-      <form onSubmit={savePerson}>
-        <div>
-          name:
-          <input value={newName} onChange={handleNameChange} type="text" />
-        </div>
-        <div>
-          number:
-          <input value={newNumber} onChange={handleNumberChange} type="tel" />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {personsToShow.map((person) => (
-        <div key={person.id}>
-          {person.name} / <em>{person.number}</em>
-        </div>
-      ))}
+      <Filter query={query} handleSearch={handleSearch} />
+
+      <h3>add a new</h3>
+      <PersonForm
+        savePerson={savePerson}
+        newName={newName}
+        handleNameChange={handleNameChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
+
+      <h3>Numbers</h3>
+      <Persons persons={personsToShow} />
     </div>
   );
 };
