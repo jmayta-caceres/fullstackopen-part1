@@ -13,6 +13,9 @@ export default function Content({ parts }) {
           <Part key={part.id} part={part.name} exercises={part.exercises} />
         );
       })}
+      <p>
+        <strong>total of {total} exercises</strong>
+      </p>
     </div>
   );
 }
