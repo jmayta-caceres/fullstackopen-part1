@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 
 const App = () => {
-  const fakePersons = [
-    { id: 1, name: "Arto Hellas", number: "934-6598-123" },
-    { id: 2, name: "Mr. Rickey Dach", number: "1-077-045-0320" },
-    { id: 3, name: "Serenity Abbott", number: "+03(1)9301810931" },
-    { id: 4, name: "Chaz Conn II", number: "724-248-5072" },
-    { id: 5, name: "Prof. Retta Renner II", number: "1-149-786-7867x617" },
-    { id: 6, name: "Hudson Yost", number: "(405)729-6382" },
-  ];
-  const [persons, setPersons] = useState(fakePersons);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/persons")
+      .then((response) => setPersons(response.data));
+  }, []);
+
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [query, setQuery] = useState("");
